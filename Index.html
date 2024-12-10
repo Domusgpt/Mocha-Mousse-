@@ -5,30 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOCHA MOUSSE CotY COIN</title>
     <style>
-        /* Previous styles remain the same */
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             min-height: 100vh;
             background: linear-gradient(135deg, #3C2A21 0%, #8B6B4E 100%);
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             font-family: "Arial Black", Impact, sans-serif;
             text-align: center;
             overflow-x: hidden;
         }
 
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, 
+                rgba(139, 107, 78, 0.3) 0%,
+                rgba(60, 42, 33, 0.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
         .video-container {
             position: relative;
             width: 100%;
-            max-width: 800px;
             padding-bottom: 56.25%;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3),
-                        0 0 40px rgba(0, 255, 255, 0.2);
-            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3),
+                        0 0 60px rgba(0, 255, 255, 0.2);
+            border-radius: 15px;
             overflow: hidden;
         }
 
@@ -41,7 +62,138 @@
             border: none;
         }
 
-        /* All other previous styles remain exactly the same */
+        .coin-art {
+            font-size: 24px;
+            line-height: 1.2;
+            margin: 20px;
+            text-align: center;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: 900;
+            margin: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: neonFlash 4s infinite;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #F5E6D3;
+            margin: 20px;
+            text-shadow: 0 0 5px #D4BBA3,
+                         0 0 10px #8B6B4E;
+        }
+
+        .countdown {
+            font-size: 36px;
+            margin: 20px;
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff,
+                        0 0 20px #00ffff,
+                        0 0 30px #ff00ff;
+            animation: pulseGlow 2s infinite;
+            font-family: "Arial Black", Impact, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            font-size: 28px;
+            color: #ff69b4;
+            margin: 20px;
+            text-shadow: 0 0 10px #ff69b4,
+                        0 0 20px #e6e6fa;
+            animation: pulseGlow 3s infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .trade-link {
+            margin: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
+            animation: buttonGlow 3s infinite;
+        }
+
+        .trade-link:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        @keyframes neonFlash {
+            0% {
+                color: #ff00ff;
+                text-shadow: 0 0 10px #ff00ff,
+                            0 0 20px #ff00ff,
+                            0 0 30px #ff00ff,
+                            0 0 40px rgba(255, 0, 255, 0.5);
+            }
+            33% {
+                color: #00ffff;
+                text-shadow: 0 0 10px #00ffff,
+                            0 0 20px #00ffff,
+                            0 0 30px #00ffff,
+                            0 0 40px rgba(0, 255, 255, 0.5);
+            }
+            66% {
+                color: #e6e6fa;
+                text-shadow: 0 0 10px #e6e6fa,
+                            0 0 20px #e6e6fa,
+                            0 0 30px #e6e6fa,
+                            0 0 40px rgba(230, 230, 250, 0.5);
+            }
+            100% {
+                color: #ff69b4;
+                text-shadow: 0 0 10px #ff69b4,
+                            0 0 20px #ff69b4,
+                            0 0 30px #ff69b4,
+                            0 0 40px rgba(255, 105, 180, 0.5);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.7); }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 10px;
+            }
+            .title {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+            .subtitle, .countdown {
+                font-size: 20px;
+            }
+            .tagline {
+                font-size: 24px;
+            }
+            .coin-art {
+                font-size: 20px;
+            }
+            .trade-link {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -69,7 +221,6 @@
         <a href="https://pump.fun/coin/7Pm97pnZx8jJDJSj5DeM5AFRKEGEA4fCh9Q1gturpump" class="trade-link" target="_blank">TRADE NOW</a>
     </div>
 
-    <!-- Previous script remains exactly the same -->
     <script>
         function updateCountdown() {
             const targetDate = new Date('December 22, 2024 20:00:00 EST');
