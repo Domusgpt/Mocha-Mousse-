@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOCHA MOUSSE CotY COIN</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #3C2A21 0%, #8B6B4E 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: "Arial Black", Impact, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, 
+                rgba(139, 107, 78, 0.3) 0%,
+                rgba(60, 42, 33, 0.6) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .coin-art {
+            font-size: 24px;
+            line-height: 1.2;
+            margin: 20px;
+            text-align: center;
+            color: gold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: 900;
+            margin: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: neonFlash 4s infinite;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #F5E6D3;
+            margin: 20px;
+            text-shadow: 0 0 5px #D4BBA3,
+                         0 0 10px #8B6B4E;
+        }
+
+        @keyframes neonFlash {
+            0% {
+                color: #ff00ff;
+                text-shadow: 0 0 10px #ff00ff,
+                            0 0 20px #ff00ff,
+                            0 0 30px #ff00ff,
+                            0 0 40px rgba(255, 0, 255, 0.5);
+            }
+            33% {
+                color: #00ffff;
+                text-shadow: 0 0 10px #00ffff,
+                            0 0 20px #00ffff,
+                            0 0 30px #00ffff,
+                            0 0 40px rgba(0, 255, 255, 0.5);
+            }
+            66% {
+                color: #e6e6fa;
+                text-shadow: 0 0 10px #e6e6fa,
+                            0 0 20px #e6e6fa,
+                            0 0 30px #e6e6fa,
+                            0 0 40px rgba(230, 230, 250, 0.5);
+            }
+            100% {
+                color: #ff69b4;
+                text-shadow: 0 0 10px #ff69b4,
+                            0 0 20px #ff69b4,
+                            0 0 30px #ff69b4,
+                            0 0 40px rgba(255, 105, 180, 0.5);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+            .subtitle {
+                font-size: 20px;
+            }
+            .coin-art {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="content">
+        <pre class="coin-art">
+   💰 💰 💰
+  💰 🪙 💰
+ 💰 💰 💰
+  $ $ $
+   $ $
+    $
+        </pre>
+        <div class="title">MOCHA MOUSSE<br>CotY COIN</div>
+        <div class="subtitle">Color and Coin of 2025</div>
+    </div>
+</body>
+</html>
