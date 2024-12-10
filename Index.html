@@ -18,6 +18,15 @@
             overflow-x: hidden;
         }
 
+        .hidden-hint {
+            color: #3C2A21;
+            user-select: all;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+        }
+
         .background-overlay {
             position: fixed;
             top: 0;
@@ -62,13 +71,23 @@
             border: none;
         }
 
-        .coin-art {
+        .coin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             font-size: 24px;
-            line-height: 1.2;
             margin: 20px;
-            text-align: center;
-            color: gold;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .coin-cell {
+            padding: 10px;
+            transition: transform 0.2s, text-shadow 0.2s;
+        }
+
+        .coin-cell:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 10px gold;
         }
 
         .title {
@@ -96,7 +115,6 @@
                         0 0 20px #00ffff,
                         0 0 30px #ff00ff;
             animation: pulseGlow 2s infinite;
-            font-family: "Arial Black", Impact, sans-serif;
             letter-spacing: 2px;
         }
 
@@ -129,6 +147,86 @@
         .trade-link:hover {
             transform: scale(1.05);
             filter: brightness(1.2);
+        }
+
+        .hidden-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #3C2A21 0%, #8B6B4E 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3),
+                        0 0 60px rgba(0, 255, 255, 0.2);
+            z-index: 1000;
+            width: 300px;
+            color: white;
+        }
+
+        .winner-message {
+            font-size: 18px;
+            color: #ff69b4;
+            text-shadow: 0 0 10px #ff69b4;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #F5E6D3;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        .form-group .contact-choice {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .form-group .contact-choice label {
+            display: inline;
+            color: #F5E6D3;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            animation: buttonGlow 3s infinite;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
         }
 
         @keyframes neonFlash {
@@ -186,7 +284,7 @@
             .tagline {
                 font-size: 24px;
             }
-            .coin-art {
+            .coin-grid {
                 font-size: 20px;
             }
             .trade-link {
@@ -197,6 +295,7 @@
     </style>
 </head>
 <body>
+    <div class="hidden-hint">73x2</div>
     <div class="background-overlay"></div>
     <div class="content">
         <div class="video-container">
@@ -206,14 +305,17 @@
                 allowfullscreen>
             </iframe>
         </div>
-        <pre class="coin-art">
-   💰 💰 💰
-  💰 🪙 💰
- 💰 💰 💰
-  $ $ $
-   $ $
-    $
-        </pre>
+        <div class="coin-grid" id="keypad">
+            <div class="coin-cell" data-value="1">💰</div>
+            <div class="coin-cell" data-value="2">💰</div>
+            <div class="coin-cell" data-value="3">💰</div>
+            <div class="coin-cell" data-value="4">💰</div>
+            <div class="coin-cell" data-value="5">🪙</div>
+            <div class="coin-cell" data-value="6">💰</div>
+            <div class="coin-cell" data-value="7">💰</div>
+            <div class="coin-cell" data-value="8">💰</div>
+            <div class="coin-cell" data-value="9">💰</div>
+        </div>
         <div class="title">MOCHA MOUSSE<br>CotY COIN</div>
         <div class="subtitle">Color and Coin of 2025</div>
         <div class="countdown" id="countdown"></div>
@@ -221,7 +323,25 @@
         <a href="https://pump.fun/coin/7Pm97pnZx8jJDJSj5DeM5AFRKEGEA4fCh9Q1gturpump" class="trade-link" target="_blank">TRADE NOW</a>
     </div>
 
+    <div class="overlay" id="overlay"></div>
+    <div class="hidden-form" id="emailForm">
+        <div class="winner-message">🎉 You just won 100,000 Mocha MousseCotY!!! 🎉</div>
+        <div class="form-group">
+            <div class="contact-choice">
+                <input type="radio" id="emailChoice" name="contactType" value="email" checked onchange="toggleContactInput()">
+                <label for="emailChoice">Email</label>
+                
+                <input type="radio" id="instagramChoice" name="contactType" value="instagram" onchange="toggleContactInput()">
+                <label for="instagramChoice">Instagram</label>
+            </div>
+            
+            <input type="text" id="contactInput" placeholder="Enter your email address" required>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Claim Your Prize!</button>
+    </div>
+
     <script>
+        // Countdown function
         function updateCountdown() {
             const targetDate = new Date('December 22, 2024 20:00:00 EST');
             const now = new Date();
@@ -245,6 +365,52 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
-    </script>
-</body>
-</html>
+
+        // Secret code handling
+        let code = '';
+        const secretCode = '7373';
+        
+        document.getElementById('keypad').addEventListener('click', (e) => {
+            const cell = e.target.closest('.coin-cell');
+            if (!cell) return;
+            
+            const value = cell.dataset.value;
+            code += value;
+            
+            // Check last 4 digits only
+            if (code.length > 4) {
+                code = code.slice(-4);
+            }
+            
+            if (code === secretCode) {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('emailForm').style.display = 'block';
+                code = '';
+            }
+        });
+
+        // Form handling
+        function toggleContactInput() {
+            const contactInput = document.getElementById('contactInput');
+            const isEmail = document.getElementById('emailChoice').checked;
+            
+            contactInput.placeholder = isEmail ? 
+                "Enter your email address" : 
+                "Enter your Instagram handle";
+        }
+
+        function submitForm() {
+            const isEmail = document.getElementById('emailChoice').checked;
+            const contactValue = document.getElementById('contactInput').value;
+            const contactType = isEmail ? 'Email' : 'Instagram';
+            
+            if (!contactValue) {
+                alert('Please enter your contact information');
+                return;
+            }
+
+            const message = `New Winner!\nContact Type: ${contactType}\nContact: ${contactValue}`;
+            const mailtoLink = `mailto:phillips.paul.email@gmail.com?subject=New Mocha MousseCotY Winner!&body=${encodeURIComponent(message)}`;
+            window.location.href = mailtoLink;
+            
+            // Hide the</antArtifact>
