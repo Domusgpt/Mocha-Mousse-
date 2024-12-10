@@ -66,10 +66,13 @@
         .countdown {
             font-size: 36px;
             margin: 20px;
-            color: #fff;
+            color: #00ffff;
             text-shadow: 0 0 10px #00ffff,
-                        0 0 20px #ff00ff;
+                        0 0 20px #00ffff,
+                        0 0 30px #ff00ff;
             animation: pulseGlow 2s infinite;
+            font-family: "Arial Black", Impact, sans-serif;
+            letter-spacing: 2px;
         }
 
         .tagline {
@@ -79,6 +82,8 @@
             text-shadow: 0 0 10px #ff69b4,
                         0 0 20px #e6e6fa;
             animation: pulseGlow 3s infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .trade-link {
@@ -183,18 +188,24 @@
 
     <script>
         function updateCountdown() {
+            const targetDate = new Date('December 22, 2024 20:00:00 EST');
             const now = new Date();
-            const end = new Date(now);
-            end.setDate(end.getDate() + 12);
-            
-            const diff = end - now;
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "IT'S TIME!";
+                return;
+            }
+
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
+            const formatNumber = (num) => num < 10 ? `0${num}` : num;
+
             document.getElementById('countdown').innerHTML = 
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+                `${days}d ${formatNumber(hours)}h ${formatNumber(minutes)}m ${formatNumber(seconds)}s`;
         }
 
         updateCountdown();
