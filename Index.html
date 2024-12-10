@@ -4,7 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOCHA MOUSSE CotY COIN</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --mocha-dark: #3C2A21;
+            --mocha-medium: #8B6B4E;
+            --mocha-light: #D4BBA3;
+            --neon-pink: #ff69b4;
+            --neon-cyan: #00ffff;
+            --neon-purple: #ff00ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--mocha-dark) 0%, var(--mocha-medium) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .secret-hint {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--mocha-dark);
+            font-size: 14px;
+            user-select: all;
+            z-index: 10;
+            background: var(--mocha-dark);
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .coin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            font-size: 32px;
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 400px;
+            background: rgba(60, 42, 33, 0.3);
+            border-radius: 15px;
+        }
+
+        .coin-cell {
+            padding: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .coin-cell:hover {
+            transform: scale(1.1);
+        }
+
+        .coin-cell:active {
+            transform: scale(0.95);
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px;
+            animation: neonFlash 4s infinite;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--mocha-light);
+            margin: 20px;
+        }
+
+        .countdown {
+            font-size: 36px;
+            margin: 20px;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .tagline {
+            font-size: 28px;
+            color: var(--neon-pink);
+            margin: 20px;
+        }
+
+        .trade-link {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        .hidden-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, var(--mocha-dark), var(--mocha-medium));
+            padding: 30px;
+            border-radius: 15px;
+            z-index: 1000;
+            width: 300px;
+            color: white;
+        }
+
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan));
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @keyframes neonFlash {
+            0%, 100% {
+                color: var(--neon-purple);
+                text-shadow: 0 0 10px var(--neon-purple);
+            }
+            50% {
+                color: var(--neon-cyan);
+                text-shadow: 0 0 10px var(--neon-cyan);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 36px; }
+            .subtitle, .countdown { font-size: 20px; }
+            .tagline { font-size: 24px; }
+            .coin-grid { font-size: 24px; }
+        }
+    </style>
 </head>
 <body>
     <div class="secret-hint">73x2</div>
@@ -47,6 +231,98 @@
         </div>
         <button class="submit-btn" onclick="submitForm()">Claim Your Prize!</button>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // Secret code handling
+        let code = '';
+        const secretCode = '7373';
+
+        document.getElementById('keypad').addEventListener('click', (e) => {
+            const cell = e.target.closest('.coin-cell');
+            if (!cell) return;
+            
+            const value = cell.getAttribute('data-value');
+            code += value;
+            
+            // Visual feedback
+            cell.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                cell.style.transform = '';
+            }, 100);
+            
+            // Keep last 4 digits
+            if (code.length > 4) {
+                code = code.slice(-4);
+            }
+            
+            // Check code
+            if (code === secretCode) {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('emailForm').style.display = 'block';
+                code = '';
+            }
+        });
+
+        // Form handling
+        function toggleContactInput() {
+            const contactInput = document.getElementById('contactInput');
+            const isEmail = document.getElementById('emailChoice').checked;
+            contactInput.placeholder = isEmail ? 
+                "Enter your email address" : 
+                "Enter your Instagram handle";
+        }
+
+        function submitForm() {
+            const isEmail = document.getElementById('emailChoice').checked;
+            const contactValue = document.getElementById('contactInput').value;
+            const contactType = isEmail ? 'Email' : 'Instagram';
+            
+            if (!contactValue) {
+                alert('Please enter your contact information');
+                return;
+            }
+
+            const message = `New Winner!\nContact Type: ${contactType}\nContact: ${contactValue}`;
+            const mailtoLink = `mailto:phillips.paul.email@gmail.com?subject=New Mocha MousseCotY Winner!&body=${encodeURIComponent(message)}`;
+            window.location.href = mailtoLink;
+            
+            // Hide form
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('emailForm').style.display = 'none';
+        }
+
+        // Close form when clicking overlay
+        document.getElementById('overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'overlay') {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('emailForm').style.display = 'none';
+            }
+        });
+
+        // Countdown timer
+        function updateCountdown() {
+            const targetDate = new Date('December 22, 2024 20:00:00 EST');
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "IT'S TIME!";
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const formatNumber = (num) => num < 10 ? `0${num}` : num;
+
+            document.getElementById('countdown').innerHTML = 
+                `${days}d ${formatNumber(hours)}h ${formatNumber(minutes)}m ${formatNumber(seconds)}s`;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
