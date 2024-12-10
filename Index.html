@@ -63,6 +63,44 @@
                          0 0 10px #8B6B4E;
         }
 
+        .countdown {
+            font-size: 36px;
+            margin: 20px;
+            color: #fff;
+            text-shadow: 0 0 10px #00ffff,
+                        0 0 20px #ff00ff;
+            animation: pulseGlow 2s infinite;
+        }
+
+        .tagline {
+            font-size: 28px;
+            color: #ff69b4;
+            margin: 20px;
+            text-shadow: 0 0 10px #ff69b4,
+                        0 0 20px #e6e6fa;
+            animation: pulseGlow 3s infinite;
+        }
+
+        .trade-link {
+            margin: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
+            animation: buttonGlow 3s infinite;
+        }
+
+        .trade-link:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
         @keyframes neonFlash {
             0% {
                 color: #ff00ff;
@@ -94,16 +132,33 @@
             }
         }
 
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.7); }
+        }
+
         @media (max-width: 768px) {
             .title {
                 font-size: 36px;
                 letter-spacing: 2px;
             }
-            .subtitle {
+            .subtitle, .countdown {
                 font-size: 20px;
+            }
+            .tagline {
+                font-size: 24px;
             }
             .coin-art {
                 font-size: 20px;
+            }
+            .trade-link {
+                font-size: 16px;
+                padding: 12px 24px;
             }
         }
     </style>
@@ -121,6 +176,29 @@
         </pre>
         <div class="title">MOCHA MOUSSE<br>CotY COIN</div>
         <div class="subtitle">Color and Coin of 2025</div>
+        <div class="countdown" id="countdown"></div>
+        <div class="tagline">Our Shift Their Paradigm</div>
+        <a href="https://pump.fun/coin/7Pm97pnZx8jJDJSj5DeM5AFRKEGEA4fCh9Q1gturpump" class="trade-link" target="_blank">TRADE NOW</a>
     </div>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            const end = new Date(now);
+            end.setDate(end.getDate() + 12);
+            
+            const diff = end - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
