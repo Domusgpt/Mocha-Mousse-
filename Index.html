@@ -82,10 +82,13 @@
             padding: 15px;
             cursor: pointer;
             transition: transform 0.2s;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
         }
 
         .coin-cell:hover {
             transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .coin-cell:active {
@@ -97,12 +100,14 @@
             font-weight: bold;
             margin: 20px;
             animation: neonFlash 4s infinite;
+            text-transform: uppercase;
         }
 
         .subtitle {
             font-size: 24px;
             color: var(--mocha-light);
             margin: 20px;
+            text-shadow: 0 0 5px var(--mocha-light);
         }
 
         .countdown {
@@ -110,12 +115,16 @@
             margin: 20px;
             color: var(--neon-cyan);
             text-shadow: 0 0 10px var(--neon-cyan);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px 30px;
+            border-radius: 10px;
         }
 
         .tagline {
             font-size: 28px;
             color: var(--neon-pink);
             margin: 20px;
+            text-shadow: 0 0 10px var(--neon-pink);
         }
 
         .trade-link {
@@ -127,6 +136,60 @@
             color: white;
             text-decoration: none;
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .trade-link:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .press-section {
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(60, 42, 33, 0.3);
+            border-radius: 15px;
+            max-width: 800px;
+        }
+
+        .press-title {
+            color: var(--neon-cyan);
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .press-link {
+            text-decoration: none;
+        }
+
+        .press-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .press-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .press-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-right: 15px;
+            filter: brightness(0) invert(1);
+        }
+
+        .press-text {
+            color: var(--mocha-light);
+            font-size: 18px;
+            text-align: left;
         }
 
         .overlay {
@@ -159,6 +222,23 @@
             text-align: left;
         }
 
+        .contact-choice {
+            margin-bottom: 15px;
+        }
+
+        .contact-choice label {
+            margin-right: 15px;
+            color: var(--mocha-light);
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            margin-top: 5px;
+        }
+
         .submit-btn {
             width: 100%;
             padding: 10px;
@@ -169,6 +249,11 @@
             color: white;
             cursor: pointer;
             font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
         }
 
         @keyframes neonFlash {
@@ -187,71 +272,11 @@
             .subtitle, .countdown { font-size: 20px; }
             .tagline { font-size: 24px; }
             .coin-grid { font-size: 24px; }
+            .press-text { font-size: 16px; }
+            .press-logo { width: 40px; height: 40px; }
+            .press-section { margin: 20px 10px; }
         }
     </style>
-    .press-section {
-        margin: 40px auto;
-        padding: 20px;
-        background: rgba(60, 42, 33, 0.3);
-        border-radius: 15px;
-        max-width: 800px;
-    }
-
-    .press-title {
-        color: var(--neon-cyan);
-        font-size: 28px;
-        margin-bottom: 20px;
-        text-shadow: 0 0 10px var(--neon-cyan);
-    }
-
-    .press-link {
-        text-decoration: none;
-    }
-
-    .press-item {
-        display: flex;
-        align-items: center;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        transition: all 0.3s ease;
-    }
-
-    .press-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .press-logo {
-        width: 50px;
-        height: 50px;
-        object-fit: contain;
-        margin-right: 15px;
-        filter: brightness(0) invert(1);
-    }
-
-    .press-text {
-        color: var(--mocha-light);
-        font-size: 18px;
-        text-align: left;
-    }
-
-    @media (max-width: 768px) {
-        .press-section {
-            margin: 20px 10px;
-        }
-        
-        .press-text {
-            font-size: 16px;
-        }
-        
-        .press-logo {
-            width: 40px;
-            height: 40px;
-        }
-    }
-</style>
 </head>
 <body>
     <div class="secret-hint">73x2</div>
@@ -278,6 +303,18 @@
         <div class="countdown" id="countdown"></div>
         <div class="tagline">Our Shift Their Paradigm</div>
         <a href="https://pump.fun/coin/7Pm97pnZx8jJDJSj5DeM5AFRKEGEA4fCh9Q1gturpump" class="trade-link" target="_blank">TRADE NOW</a>
+        
+        <div class="press-section">
+            <h2 class="press-title">Articles and Press</h2>
+            <a href="https://www.nbclosangeles.com/news/business/money-report/money-may-be-green-but-the-color-of-wealth-is-mocha-mousse/3576169/?amp=1&os=io&ref=app" 
+               class="press-link" 
+               target="_blank">
+                <div class="press-item">
+                    <img src="https://media.nbclosangeles.com/2024/01/NBC_UNIVERSAL_LOGO.png" alt="NBC" class="press-logo">
+                    <span class="press-text">Money May Be Green, But the Color of Wealth Is Mocha Mousse - NBC Los Angeles</span>
+                </div>
+            </a>
+        </div>
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -376,16 +413,4 @@
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            const formatNumber = (num) => num < 10 ? `0${num}` : num;
-
-            document.getElementById('countdown').innerHTML = 
-                `${days}d ${formatNumber(hours)}h ${formatNumber(minutes)}m ${formatNumber(seconds)}s`;
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-    </script>
-</body>
-</html>
+            const seconds = Math.floor((diff % (1000 * 60))</antArtifact>
