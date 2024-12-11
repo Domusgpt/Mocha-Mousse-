@@ -189,6 +189,69 @@
             .coin-grid { font-size: 24px; }
         }
     </style>
+    .press-section {
+        margin: 40px auto;
+        padding: 20px;
+        background: rgba(60, 42, 33, 0.3);
+        border-radius: 15px;
+        max-width: 800px;
+    }
+
+    .press-title {
+        color: var(--neon-cyan);
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .press-link {
+        text-decoration: none;
+    }
+
+    .press-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .press-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .press-logo {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        margin-right: 15px;
+        filter: brightness(0) invert(1);
+    }
+
+    .press-text {
+        color: var(--mocha-light);
+        font-size: 18px;
+        text-align: left;
+    }
+
+    @media (max-width: 768px) {
+        .press-section {
+            margin: 20px 10px;
+        }
+        
+        .press-text {
+            font-size: 16px;
+        }
+        
+        .press-logo {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>
 </head>
 <body>
     <div class="secret-hint">73x2</div>
